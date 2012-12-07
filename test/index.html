@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8"/>
+	<script type="text/javascript">
+		var snip = {
+      		minwidth: 400
+      	};
+	</script>
+	<script type="text/javascript" src="./../dist/s2m.js"></script>
+</head>
+<body>
+<pre id='code' data-snip-lang='cs' data-snip-scheme='vs2010' data-snip-painter-1='border => radius:5,width:1' data-snip-conf-min-width='800'>
+using System.Collections.Generic;
+using System.Linq;
+using Snip2me.SyntaxParser.Analyzers;
+using Snip2me.SyntaxParser.IO;
+
+namespace Snip2me.SyntaxParser
+{
+    public abstract class SyntaxParser : ISyntaxParser
+    {
+        #region Temporary
+        #endregion
+        protected SyntaxParser()
+        {
+            String OutlinedWords = new HashSet&lt;string&gt;();
+
+            SpacesToPaddingConvert = "4ijsidj";
+
+            TokenFlush += TokenFlushConvertSpacesToPadding;
+
+            RegisterAnalyzer(new NewLineAnalyzer());
+            RegisterAnalyzer(new SpaceAnalyzer());
+            RegisterAnalyzer(new PaddingAnalyzer());
+            RegisterAnalyzer(new StringAnalyzer());
+        }
+    }
+}
+</pre>
+
+<pre data-snip-lang='ruby' data-snip-scheme='vs2010' data-snip-painter-1='border => radius:5,width:1'>
+# Box drawing class.
+class Box
+  # For printing
+  def to_s
+    fill = @fill
+    if fill == ' '
+      fill = '(spaces)'
+    end
+    return "Box " + @wid.to_s + "x" + @hgt.to_s + ", filled: " + fill
+  end
+
+private
+  # Print one line of the box.
+  def line(ends, count, fill)
+    print ends;
+    count.times { print fill }
+    print ends, "\n";
+  end
+end
+
+# Create some boxes.
+b1 = Box.new(10, 4)
+b2 = Box.new(5,12).fill('$')
+b3 = Box.new(3,3).fill('@')
+
+print "b1 = ", b1, "\nb2 = ", b2, "\nb3 = ", b3, "\n\n"
+
+# Print some boxes.
+print "b1:\n";
+b1.gen
+
+print "\nb2:\n";
+b2.gen
+
+print "\nb3:\n";
+b3.gen
+
+print "\nb2 flipped and filled with #:\n";
+b2.fill('#').flip.gen
+print "\nb2 = ", b2, "\n"
+</pre>
+
+<pre id='pre4debug'>
+</pre>
+</body>
+</html>
+

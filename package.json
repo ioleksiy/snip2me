@@ -1,0 +1,11 @@
+{
+	"name": "app",
+	"version": "0.0.1",
+	"description": "App Name: 0.0.1",
+	"author": "Your Name",
+	"main": "./app.js",
+	"dependencies": {
+		"grunt-shell": "latest",
+		"grunt-coffeelint": "latest"
+	}
+}
