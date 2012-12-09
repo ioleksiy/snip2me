@@ -12,7 +12,7 @@ class SnipController
       if (dbg?)
         dbg.innerHTML = tokens.Print()
       c = document.createElement("canvas")
-      sh = SchemeFactory.Create(scheme)
+      sh = SchemeFactory.Create(scheme, context.font, context.size)
       p = new CodePainter(c, tokens, sh, cont)
       for ps in painters
         tp = PainterFactory.Create(c, ps, cont, sh)
@@ -73,7 +73,9 @@ class SnipController
       matchingElements
       
     @defaults = {
-      minWidth: 0
+      minWidth: 0,
+      font: 'Courier New',
+      size: 12
     }
     
     @readConfFromElement = (el) ->
@@ -170,6 +172,12 @@ class SnipController
     if (!@canRun)
       console.log("snip2me is not compatible with current browser")
     return @canRun
+
+  parsers: ->
+    ParserFactory.List()
+
+  schemes: ->
+    SchemeFactory.List()
 
 root = exports ? this
 root.snip2 = new SnipController()

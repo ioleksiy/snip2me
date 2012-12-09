@@ -1,7 +1,9 @@
 class ParserFactory
-  @parsers = new Array()
+  @parsers = []
+  @list = []
 
   @Register: (exts, parserName, title) ->
+    @list.push({name:title,code:exts[0]})
     for ext in exts
       p = {}
       p.ext = ext.toLowerCase()
@@ -24,6 +26,9 @@ class ParserFactory
         s += t.toStr() + "\r\n"
       return s
     arr
+
+  @List: ->
+    @list
 
   @Parse: (ext, text) ->
     c = new CodeReader(text)

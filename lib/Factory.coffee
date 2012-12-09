@@ -1,10 +1,15 @@
 class Factory
-  data: []
+  constructor: ->
+    @data = []
 
-  Register: (code, item) ->
+  Register: (code, item, title = null) ->
     p = {}
     p.code = code
     p.item = item
+    if (title?)
+      p.title = title
+    else
+      p.title = code
     @data.push(p)
     true
   

@@ -10,4 +10,4 @@ class VisualStudioTenSch extends Scheme
     @set('bg',                 new SchemeDescription('#FFFFFF', 'solid'))
     super(@font, @size)
 
-SchemeFactory.Register('vs2010', VisualStudioTenSch)
+SchemeFactory.Register('vs2010', VisualStudioTenSch, 'VS 2010')

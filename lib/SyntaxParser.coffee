@@ -52,6 +52,8 @@ class SyntaxParser
     while (reader.readNext())
       temporary = @analyzeState(temporary, reader, tokens, flusher)
     flusher(temporary)
+    if (tokens.length > 0 && !(tokens[tokens.length-1] instanceof TokenNewLine))
+      tokens.push(new TokenNewLine())
     return tokens
 
   analyzeState: (temporary, reader, tokens, flusher) ->
