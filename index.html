@@ -5,13 +5,209 @@
 	<title>snip2me - the best code to image converting tool</title>
 	<link rel="shortcut icon" href="/favicon.ico" />
 	<meta name="viewport" content="width=960px, initial-scale=1.0" />
+	<meta name="keywords" content="snip,snippet,snip2,snip2me,convert,code,image,sourcecode,png,online" />
+	<meta name="description" content="online tool to convert programmers sourcecode into images for blogs, books, forums" />
+	<meta property="og:title" content="snip2me" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="http://snip2.me/" />
+	<meta property="og:image" content="http://snip2.me/images/promo.png" />
 	<!--[if lte IE 9]><link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" /><![endif]-->
 	<link rel="stylesheet" href="/css/1140.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="/css/styles.css" type="text/css" media="screen" />
 	<link href='http://fonts.googleapis.com/css?family=Anaheim' rel='stylesheet' type='text/css' />
 	<script type="text/javascript" src="/js/css3-mediaqueries.js"></script>
 	<script type="text/javascript" src="http://cloud.github.com/downloads/ioleksiy/snip2me/s2m.min.js"></script>
-	<script type="text/javascript" src="/js/app.js"></script>
+
+<script type="text/javascript">
+var observe;
+if (window.attachEvent) {
+    observe = function (element, event, handler) {
+        element.attachEvent('on'+event, handler);
+    };
+}
+else {
+    observe = function (element, event, handler) {
+        element.addEventListener(event, handler, false);
+    };
+}
+
+function fillUl(id, a, selected, click, onSelect) {
+	var buttons = document.getElementById(id).getElementsByTagName("ul")[0];
+	while (buttons.hasChildNodes()) {
+		buttons.removeChild(buttons.lastChild);
+	}
+	var i = 1;
+	for (v in a) {
+		var k = a[v];
+		var li = document.createElement("li");
+		if (i % 3 == 0) {
+			li.className = 'thirdLi';
+		}
+		var b = document.createElement("button");
+		if (k['code'] == selected) {
+			b.className = 'selected';
+			onSelect(b);
+			selectedLang = b;
+		}
+		b.setAttribute('data-item', k['code']);
+		b.innerHTML = k['name'];
+		li.appendChild(b);
+		buttons.appendChild(li);
+		observe(b, 'click', click);
+		i++;
+	}
+}
+
+function init () {
+    var text = document.getElementById('inputCode');
+    function resize () {
+        text.style.height = 'auto';
+        text.style.height = text.scrollHeight+'px';
+        text.className = (text.value == '') ? 'codeHere' : 'hCode';
+        repaint();
+    }
+    function delayedResize () {
+        window.setTimeout(resize, 0);
+    }
+    observe(text, 'change',  resize);
+    observe(text, 'cut',     delayedResize);
+    observe(text, 'paste',   delayedResize);
+    observe(text, 'drop',    delayedResize);
+    observe(text, 'keydown', delayedResize);
+
+    text.focus();
+    text.select();
+    resize();
+    
+    fillUl('buttonsLanguage', snip2.parsers(), opts.lang, langClick, function (b) {selectedLang = b;});
+    fillUl('buttonsScheme', snip2.schemes(), opts.scheme, schemeClick, function (b) {selectedScheme = b;});
+
+	buttons = document.getElementById('sizes');
+	while (buttons.hasChildNodes()) {
+		buttons.removeChild(buttons.lastChild);
+	}
+	for(var i = 8; i < 30; i += 2) {
+		var li = document.createElement("li");
+		li.setAttribute('data-item', i);
+		li.innerHTML = i + ' px';
+		buttons.appendChild(li);
+		observe(li, 'click', optLiClick);
+		if (i == opts.size) {
+			optLiClick.apply(li);
+		}
+	}
+	
+	buttons = document.getElementById('fonts');
+	while (buttons.hasChildNodes()) {
+		buttons.removeChild(buttons.lastChild);
+	}
+	for(var font in fonts) {
+		var li = document.createElement("li");
+		li.setAttribute('data-item', fonts[font]);
+		li.innerHTML = fonts[font];
+		buttons.appendChild(li);
+		observe(li, 'click', optLiFontClick);
+		if (fonts[font] == opts.font) {
+			optLiFontClick.apply(li);
+		}
+	}
+}
+
+function langClick() {
+	if (selectedLang != null) {
+		selectedLang.className = '';
+	}
+	selectedLang = this;
+	this.className = 'selected';
+	opts.lang = this.getAttribute('data-item');
+	repaint();
+}
+
+function schemeClick() {
+	if (selectedScheme != null) {
+		selectedScheme.className = '';
+	}
+	selectedScheme = this;
+	this.className = 'selected';
+	opts.scheme = this.getAttribute('data-item');
+	repaint();
+}
+
+var fonts = [
+	'Arial',
+	'Courier New',
+	'Times New Roman',
+	'Verdana'
+];
+
+var visibleMenu = null;
+var selectedLang = null;
+var selectedScheme = null;
+
+var opts = {
+	lang:'cs',
+	scheme:'vs2010',
+	font:'Courier New',
+	size:16
+};
+
+function repaint() {
+	var t = document.getElementById('dResult');
+	while (t.hasChildNodes()) {
+		t.removeChild(t.lastChild);
+	}
+	var val = document.getElementById('inputCode').value;
+	if (val == '') {
+		t.style.display = 'none';
+		return;
+	} else {
+		t.style.display = 'block';
+	}
+	var pre = document.createElement("pre")
+	pre.setAttribute('data-snip-lang', opts.lang);
+	pre.setAttribute('data-snip-scheme', opts.scheme);
+	pre.setAttribute('data-snip-conf-font', opts.font);
+	pre.setAttribute('data-snip-conf-size', opts.size);
+	//pre.setAttribute('data-snip-painter-1', 'border => radius:5,width:1');
+	pre.appendChild(document.createTextNode(val));
+	t.appendChild(pre);
+	snip2.compile(pre);
+}
+
+function hideVisible() {
+	if (visibleMenu == null) return;
+	visibleMenu.style.display = 'none';
+	visibleMenu = null;
+}
+
+function optLiClick() {
+	var button = this.parentNode.parentNode.parentNode.childNodes[1];
+	button.innerHTML = this.innerHTML;
+	hideVisible();
+	opts.size = parseInt(this.getAttribute('data-item'));
+	repaint();
+}
+
+function optLiFontClick() {
+	var button = this.parentNode.parentNode.parentNode.childNodes[1];
+	button.innerHTML = this.innerHTML;
+	hideVisible();
+	opts.font = this.getAttribute('data-item');
+	repaint();
+}
+
+function optClick(el) {
+	var ul = el.parentNode.childNodes[3].childNodes[1];
+	if (ul.style.display == 'block') {
+		ul.style.display = 'none';
+	} else {
+		hideVisible();
+		ul.style.width = (el.offsetWidth - 2) + 'px';
+		visibleMenu = ul;
+		ul.style.display = 'block';
+	}
+}
+</script>
 	
 	<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
 	<script type="text/javascript">stLight.options({publisher: "133e7ae0-7ab2-4475-b578-7c105b76f5fd"});</script>
@@ -32,7 +228,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="fourcol logo">
-				<img src="/images/logo.png" width="320" alt="snip2me logo" />
+				<img src="/images/logo.png" width="320" height="75" alt="snip2me logo" />
 				<div class='menu'>
 					<ul>
 						<li><a href="#documentation">Documentation</a></li>
@@ -217,7 +413,7 @@ class snip2 {
 			<div class="threecol">
 				<div class="footerTitle">Developed by</div>
 				<div>
-					<img class='footerImg' style="float:left" width="40" height="40" src="http://www.gravatar.com/avatar/fac014122459041bdcc4423854cc1d21.png" alt="Oleksii Glib avatar" />
+					<img class='footerImg' style="float:left" width="40" height="40" src="/images/avatar.png" alt="Oleksii Glib" />
 					<p class="footerText"><a href="http://oleksiy.pro/" target="_blank">Oleksii Glib</a></p>
 				</div>
 			</div>
