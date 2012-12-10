@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>snip2me - the best code to image converting tool</title>
+	<link rel="shortcut icon" href="/favicon.ico" />
+	<meta name="viewport" content="width=960px, initial-scale=1.0" />
+	<!--[if lte IE 9]><link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen" /><![endif]-->
+	<link rel="stylesheet" href="/css/1140.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/css/styles.css" type="text/css" media="screen" />
+	<link href='http://fonts.googleapis.com/css?family=Anaheim' rel='stylesheet' type='text/css' />
+	<script type="text/javascript" src="/js/css3-mediaqueries.js"></script>
+	<script type="text/javascript" src="http://cloud.github.com/downloads/ioleksiy/snip2me/s2m.min.js"></script>
+	<script type="text/javascript" src="/js/app.js"></script>
+	
+	<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+	<script type="text/javascript">stLight.options({publisher: "133e7ae0-7ab2-4475-b578-7c105b76f5fd"});</script>
+</head>
+<body onload="init()">
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36930749-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<header>
+	<div class="container">
+		<div class="row">
+			<div class="fourcol logo">
+				<img src="/images/logo.png" width="320" />
+				<div class='menu'>
+					<ul>
+						<li><a href="#documentation">Documentation</a></li>
+						<li><a href="//facebook.com/snip2me" target="_blank">Facebook</a></li>
+						<li><a href="//twitter.com/ioleksiy" target="_blank">Twitter</a></li>
+						<li><a href="//github.com/ioleksiy/snip2me" target="_blank" title="GitHub"><img src="images/icon-gh-light.png" width="30" height="20" alt="GitHub" /></a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="eightcol last">
+				<div class="hInput">
+<pre>
+class snip2 {
+  void me() {
+    parseAll();
+  }
+}
+</pre>
+				</div>
+				<div class="hClock"></div>
+				<div class="hResult"></div>
+			</div>
+		</div>
+	</div>
+</header>
+
+<div class="container">
+	<div class="row">
+		<div class="inputContainer">
+			<div class="inputData">
+				<textarea id="inputCode" class='codeHere'></textarea>
+			</div>
+			<div id='dResult' class='hImg'></div>
+			<div class="inputOptions">
+				<div class="fourcol">
+					<div class="optCol">
+						<div class="optHeader">
+							<span>Language</span>
+						</div>
+						<div id="buttonsLanguage" class="buttons">
+							<ul>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="fourcol">
+					<div class="optCol">
+						<div class="optHeader">
+							<span>Scheme</span>
+						</div>
+						<div id="buttonsScheme" class="buttons">
+							<ul>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="fourcol last">
+					<div id='settingsCol' class="optCol">
+						<div class="optHeader">
+							<span>Settings</span>
+						</div>
+						<div class='optSettings'>
+							<div>
+								<span>Font</span>
+								<div class="optSetting">
+									<button onclick="optClick(this)">Courier New</button>
+									<div>
+										<ul id="fonts">
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class='optSettings'>
+							<div>
+								<span>Size</span>
+								<div class="optSetting">
+									<button onclick="optClick(this)">16 px</button>
+									<div>
+										<ul id='sizes'>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>	
+	</div>
+	<div class="row">
+		<div class="twelvecol c last">
+			<span class='st_facebook_hcount' displayText='Facebook'></span>
+			<span class='st_googleplus_hcount' displayText='Google +'></span>
+			<span class='st_twitter_hcount' displayText='Tweet'></span>
+			<span class='st_pinterest_hcount' displayText='Pinterest'></span>
+			<span class='st_reddit_hcount' displayText='Reddit'></span>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="row">
+		<article>
+			<h1>snip2me - user reference</h1>
+			<h2 id="documentation">Why should I use it</h2>
+			<p>
+				Usually there is a numerous count of ways, where you may use your code converted into image.
+				The only few variants are:
+			</p>
+			<ul>
+				<li>Books production</li>
+				<li>Blogs (if you don't want to use heavy syntax-highlighters)</li>
+				<li>Forums and social services, where code hightlightning is prohibited, but images uploading allowed</li>
+			</ul> 
+			<h2>How it works</h2>
+			<p>
+				<strong>Whole compilation is made inside your browser!</strong> And this is not a joke.
+			</p>
+			<p>
+				There are only <strong>2</strong> steps on image creation: syntax parsing and image rendering.
+			</p>
+			<p>
+				During parsing step, whole text is divided into tokens of different types.
+			</p>
+			<p>
+				On the rendering step tokens are painted onto canvas. Code painer could be wrapped into different other painters like:
+			</p>
+			<ul>
+				<li>Custom border with rectangle or rounded borders</li>
+				<li>Lines number column (not implemented yet)</li>
+				<li>Custom watermark (not implemented yet)</li>
+				<li>Color filter (not implemented yet)</li>
+			</ul> 
+			<h2>Features</h2>
+			<ul>
+				<li>Ultra-fast one-round parsing algorithm</li>
+				<li>Inheritance algorithm for canvas painting</li>
+				<li>Safe, client-side code painting</li>
+				<li>Source-code is written on coffeescript with client-side and server-side compatibility</li>
+				<li>In embedded mode automatically scans page for code blocks and replaces them into images</li>
+			</ul>
+			<h2>Requirements</h2>
+			<p>
+				The only requirement is HTML5 compatible browser with canvas and canvas-text support on client side.
+			</p>
+			<h2>How to embed</h2>
+			<p>
+				(To be written)
+			</p>
+			<h2>Contribute</h2>
+			<p>
+				Fork on <a href="//github.com/ioleksiy/snip2me" target="_bllank">GitHub</a> and make a pull request after suggestions.
+			</p>
+			<div class="c">
+				<img width="195" height="70" src="images/love.png" />
+			</div>
+		</article>
+	</div>
+	<div class="row">
+		<div id="disqus_thread"></div>
+        <script type="text/javascript">
+            var disqus_shortname = 'snip2me';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
+
+<footer>
+	<div class="container">
+		<div class="row">
+			<div class="sixcol">
+				<p>Reply to <a href="//twitter.com/ioleksiy" target="_bblank" title="My twitter account">@ioleksiy</a> if you have questions</p>
+				<p style="margin-top: 30px">Copyright &copy; 2012. MIT license is applied</p>
+			</div>
+			<div class="threecol">
+				<div class="footerTitle">Developed by</div>
+				<div>
+					<img class='footerImg' align="left" width="40" height="40" src="http://www.gravatar.com/avatar/fac014122459041bdcc4423854cc1d21.png" alt="Oleksii Glib avatar" />
+					<p class="footerText"><a href="http://oleksiy.pro/" target="_blank">Oleksii Glib</a></p>
+				</div>
+			</div>
+			<div class="threecol last">
+				<div class="footerTitle">In association with</div>
+				<div>
+					<img class='footerImg' align="left" width="40" height="40" src="/images/acro.png" alt="Acropolium" />
+					<p class="footerText"><a href="http://acropolium.com/" target="_blank">Acropolium</a></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+</body>
+</html>
