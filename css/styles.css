@@ -90,6 +90,7 @@
 
 	div.inputOptions {
 		display: inline-block;
+		margin-bottom: -6px;
 	    width: 100%;
 		border-top: 1px #a0a0a0 solid;
 		background-color: #e5e5e5;
