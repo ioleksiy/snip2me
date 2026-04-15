@@ -85,7 +85,7 @@ class SnipController
       minWidth: 0,
       font: 'Courier New',
       size: 12,
-      pixelRatio: 1
+      pixelRatio: 2
     }
     
     @readConfFromElement = (el) ->

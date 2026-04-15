@@ -140,7 +140,7 @@ You can set a global config object before the script loads:
 
 `minwidth` (lowercase `w`) is still accepted for backward compatibility with older embeds, but `minWidth` is the preferred key.
 
-For higher-quality rendering on modern HiDPI displays, set `pixelRatio` (for example `2`).
+By default, snip2me now renders with `pixelRatio: 2` for higher-quality output on modern HiDPI displays. Set `pixelRatio: 1` if you need legacy-size output.
 
 ## Programmatic API
 
@@ -263,7 +263,7 @@ After the workflow completes, third-party sites can use:
 - Fixed runtime `compile(...)` context handling so programmatic usage without explicit context no longer fails due to scheme creation using a null context.
 - Fixed a release-blocking bundling-order bug by replacing implicit directory concatenation with an explicit dependency-safe source order (prevents subclasses from being emitted before base classes).
 - Added a runtime headless self-test (`test/selftest.js`, with `test/smoke.js` alias) and enforced it in CI/release workflows.
-- Added optional high-DPI rendering via `pixelRatio` setting to improve output quality on modern displays.
+- Enabled high-DPI rendering by default via `pixelRatio: 2` (configurable) to improve output quality on modern displays.
 
 ## License
 
