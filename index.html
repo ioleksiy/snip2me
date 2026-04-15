@@ -37,7 +37,7 @@ function fillUl(id, a, selected, click, onSelect) {
 		buttons.removeChild(buttons.lastChild);
 	}
 	var i = 1;
-	for (v in a) {
+	for (var v in a) {
 		var k = a[v];
 		var li = document.createElement("li");
 		if (i % 3 == 0) {
@@ -47,7 +47,6 @@ function fillUl(id, a, selected, click, onSelect) {
 		if (k['code'] == selected) {
 			b.className = 'selected';
 			onSelect(b);
-			selectedLang = b;
 		}
 		b.setAttribute('data-item', k['code']);
 		b.innerHTML = k['name'];
