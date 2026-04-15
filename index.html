@@ -17,7 +17,7 @@
 	<link rel="stylesheet" href="/css/styles.css" type="text/css" media="screen" />
 	<link href='//fonts.googleapis.com/css?family=Anaheim' rel='stylesheet' type='text/css' />
 	<script type="text/javascript" src="/js/css3-mediaqueries.js"></script>
-	<script type="text/javascript" src="//raw.github.com/ioleksiy/snip2me/master/dist/s2m.min.js"></script>
+	<script type="text/javascript" src="https://github.com/ioleksiy/snip2me/releases/download/v0.2.0/s2m.min.js"></script>
 
 <script type="text/javascript">
 var observe;
@@ -380,7 +380,24 @@ class snip2 {
 			</p>
 			<h2>How to embed</h2>
 			<p>
-				(To be written)
+				Use the latest stable release bundle and annotate your code block with <strong>data-snip-*</strong> attributes.
+			</p>
+			<pre>
+&lt;script src="https://github.com/ioleksiy/snip2me/releases/download/v0.2.0/s2m.min.js"&gt;&lt;/script&gt;
+
+&lt;pre
+  data-snip-lang="ruby"
+  data-snip-scheme="vs2010"
+  data-snip-painter-1="border =&gt; radius:5,width:1"
+  data-snip-conf-min-width="640"
+&gt;
+def hello(name)
+  puts "Hello, #{name}!"
+end
+&lt;/pre&gt;
+			</pre>
+			<p>
+				On page load, snip2me automatically compiles matching <strong>&lt;pre&gt;</strong> blocks into rendered images.
 			</p>
 			<h2>Contribute</h2>
 			<p>
