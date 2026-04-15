@@ -70,6 +70,53 @@ Include the built script and annotate a `<pre>` element:
 </pre>
 ```
 
+## Install on Third-Party Websites
+
+You can consume snip2me without cloning this repository.
+
+### Option 1: Use GitHub Releases (recommended)
+
+1. Open the latest release assets:
+    - `https://github.com/ioleksiy/snip2me/releases/latest`
+2. Use the direct script URL in your page:
+
+```html
+<script src="https://github.com/ioleksiy/snip2me/releases/latest/download/s2m.min.js"></script>
+```
+
+3. Add `data-snip-*` attributes to your `<pre>` blocks (example below).
+
+### Option 2: Download and self-host
+
+1. Download `s2m.js` or `s2m.min.js` from a release.
+2. Place the file on your own CDN/static host.
+3. Include it via your own URL:
+
+```html
+<script src="https://your-cdn.example.com/js/s2m.min.js"></script>
+```
+
+### Minimal page example
+
+```html
+<!doctype html>
+<html>
+<head>
+   <meta charset="utf-8" />
+   <script src="https://github.com/ioleksiy/snip2me/releases/latest/download/s2m.min.js"></script>
+</head>
+<body>
+   <pre data-snip-lang="ruby" data-snip-scheme="vs2010" data-snip-painter-1="border => radius:5,width:1">
+def hello(name)
+   puts "Hello, #{name}!"
+end
+   </pre>
+</body>
+</html>
+```
+
+On page load, snip2me automatically transforms matching `<pre>` blocks into rendered snippet images.
+
 ### Supported element attributes
 
 - `data-snip-lang`: language code used to pick parser.
@@ -137,6 +184,33 @@ npm run build
 ```
 
 You can also run Grunt directly (`npx grunt`). A `Gruntfile.js` alias is included for modern Grunt discovery.
+
+## GitHub Actions
+
+This repository includes two workflows:
+
+- `.github/workflows/build.yml`
+   - Runs on push/PR/manual trigger.
+   - Builds `dist/s2m.js` and `dist/s2m.min.js`.
+   - Uploads build outputs as artifact `snip2me-dist`.
+
+- `.github/workflows/release.yml`
+   - Runs on tags matching `v*` (for example `v0.2.0`) and manual trigger.
+   - Builds the bundle.
+   - Creates/updates a GitHub Release and uploads `s2m.js` and `s2m.min.js` as release assets.
+
+### Creating a release build
+
+```bash
+git tag v0.2.0
+git push origin v0.2.0
+```
+
+After the workflow completes, third-party sites can use:
+
+```html
+<script src="https://github.com/ioleksiy/snip2me/releases/latest/download/s2m.min.js"></script>
+```
 
 ## Current Limitations / Notes
 
