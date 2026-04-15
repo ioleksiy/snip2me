@@ -82,6 +82,19 @@ print "\nb2 = ", b2, "\n"</pre>
 
 <pre id='pre4debug'>
 </pre>
+
+<pre data-snip-lang='js' data-snip-scheme='one-dark' data-snip-painter-1='border => radius:4,width:1'>
+const users = [
+  { name: 'Ada', score: 42 },
+  { name: 'Linus', score: 37 }
+];
+
+const top = users
+  .filter((u) => u.score > 40)
+  .map((u) => `${u.name}: ${u.score}`);
+
+console.log(top.join('\n'));
+</pre>
 </body>
 </html>
 

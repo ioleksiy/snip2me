@@ -137,6 +137,24 @@ function run() {
         ext: 'coffee',
         scheme: 'vs2010',
         text: 'sum = (a, b) -> a + b\nconsole.log sum(2, 3)\n'
+      },
+      {
+        name: 'js-one-dark',
+        ext: 'js',
+        scheme: 'one-dark',
+        text: 'const sum = (a, b) => a + b;\nconsole.log(sum(2, 3));\n'
+      },
+      {
+        name: 'python-github-light',
+        ext: 'python',
+        scheme: 'github-light',
+        text: 'def add(a, b):\n    return a + b\nprint(add(2, 3))\n'
+      },
+      {
+        name: 'json-monokai',
+        ext: 'json',
+        scheme: 'monokai',
+        text: '{\n  "name": "snip2me",\n  "ok": true\n}\n'
       }
     ];
 
