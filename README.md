@@ -159,8 +159,8 @@ This project keeps its legacy CoffeeScript + Grunt architecture, with a compatib
 
 ### Prerequisites
 
-- Node.js
-- npm
+- Node.js >= 22
+- npm >= 10
 
 ### Install dependencies
 

@@ -1,6 +1,5 @@
 class Painter
   settings: null
-  scheme: null
   child: null
   w: -1
   h: -1
