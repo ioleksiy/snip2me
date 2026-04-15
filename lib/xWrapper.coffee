@@ -12,7 +12,10 @@ class SnipController
       if (dbg?)
         dbg.innerHTML = tokens.Print()
       c = document.createElement("canvas")
-      sh = SchemeFactory.Create(scheme, context.font, context.size)
+      sh = SchemeFactory.Create(scheme, cont.font, cont.size)
+      if (sh == null)
+        console.log("snip2me: scheme `"+scheme+"` is not supported")
+        return null
       p = new CodePainter(c, tokens, sh, cont)
       for ps in painters
         tp = PainterFactory.Create(c, ps, cont, sh)
@@ -88,6 +91,8 @@ class SnipController
       @mergeSettings(obj)
     
     @mergeSettings = (obj) ->
+      if (obj? && obj.minwidth? && !obj.minWidth?)
+        obj.minWidth = obj.minwidth
       @mergeObjs(@defaults, obj)
 
     @isInt = (n) ->
@@ -149,7 +154,7 @@ class SnipController
     if (@isElement(element))
       return @transformElement(element)
     else
-      return @transform.apply(snip2, arguments)
+      return @transform.apply(@, arguments)
 
   setSettings: (settings) ->
     @defaults = @mergeSettings(settings)

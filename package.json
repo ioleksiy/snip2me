@@ -1,11 +1,20 @@
 {
-	"name": "app",
-	"version": "0.0.1",
-	"description": "App Name: 0.0.1",
-	"author": "Your Name",
-	"main": "./app.js",
-	"dependencies": {
-		"grunt-shell": "latest",
-		"grunt-coffeelint": "latest"
+	"name": "snip2me",
+	"version": "0.1.0",
+	"description": "Legacy CoffeeScript code-to-image syntax highlighter",
+	"author": "Oleksii Glib",
+	"main": "dist/s2m.js",
+	"scripts": {
+		"build": "grunt",
+		"watch": "grunt watch"
+	},
+	"devDependencies": {
+		"coffeescript": "^2.7.0",
+		"grunt": "^1.6.1",
+		"grunt-cli": "^1.5.0",
+		"grunt-coffeelint": "^0.0.16",
+		"grunt-contrib-uglify": "^5.2.2",
+		"grunt-contrib-watch": "^1.1.0",
+		"grunt-shell": "^4.0.0"
 	}
 }

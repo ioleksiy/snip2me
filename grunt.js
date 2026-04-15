@@ -2,6 +2,8 @@
 module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-coffeelint');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.initConfig({
     meta: {
       version: '0.1.0',
@@ -17,11 +19,8 @@ module.exports = function(grunt) {
             command: 'coffee -c -j s2m.js -o dist/ lib/'
         },
         rmf: {
-        	command: 'rm -r ./dist'
+	        command: 'rm -rf ./dist'
         }
-    },
-    lint: {
-      files: ['grunt.js', 'dist/s2m.js']
     },
     coffeelintOptions: {
       "camel_case_classes": {
@@ -31,15 +30,19 @@ module.exports = function(grunt) {
     coffeelint: {
       app: ['lib/*.coffee']
     },
-    min: {
+    uglify: {
+      options: {
+        banner: '<%= meta.banner %>\n'
+      },
       dist: {
-        src: ['<banner:meta.banner>', 'dist/s2m.js'],
-        dest: 'dist/s2m.min.js'
+        files: {
+          'dist/s2m.min.js': ['dist/s2m.js']
+        }
       }
     },
     watch: {
-      files: '<config:files>',
-      tasks: 'default'
+      files: '<%= files %>',
+      tasks: ['default']
     },
     jshint: {
       options: {
@@ -56,8 +59,7 @@ module.exports = function(grunt) {
       },
       globals: {}
     },
-    uglify: {}
   });
 
-  grunt.registerTask('default', 'coffeelint shell:rmf shell:coffee min');
+  grunt.registerTask('default', ['coffeelint', 'shell:rmf', 'shell:coffee', 'uglify']);
 };
