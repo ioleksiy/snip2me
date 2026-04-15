@@ -146,7 +146,7 @@ function run() {
         item.text,
         item.scheme,
         [],
-        { minWidth: 0, font: 'Courier New', size: 14, pixelRatio: 2 }
+        { minWidth: 100, font: 'Courier New', size: 14, pixelRatio: 2 }
       );
 
       assert(typeof uri === 'string' && uri.indexOf('data:image/') === 0,
