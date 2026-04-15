@@ -78,6 +78,7 @@ function init () {
     text.focus();
     text.select();
     resize();
+	updateCopyrightYearRange();
     
     fillUl('buttonsLanguage', snip2.parsers(), opts.lang, langClick, function (b) {selectedLang = b;});
     fillUl('buttonsScheme', snip2.schemes(), opts.scheme, schemeClick, function (b) {selectedScheme = b;});
@@ -208,6 +209,16 @@ function optClick(el) {
 	}
 }
 
+function updateCopyrightYearRange() {
+	var yearNode = document.getElementById('copyrightYearRange');
+	if (!yearNode) {
+		return;
+	}
+	var startYear = 2012;
+	var currentYear = new Date().getFullYear();
+	yearNode.innerHTML = (currentYear > startYear) ? (startYear + '-' + currentYear) : startYear;
+}
+
 var switchTo5x=true;
 </script>
 </head>
@@ -220,7 +231,6 @@ var switchTo5x=true;
 				<div class='menu'>
 					<ul>
 						<li><a href="#documentation">Documentation</a></li>
-						<li><a href="//facebook.com/snip2me" target="_blank">Facebook</a></li>
 						<li><a href="//twitter.com/ioleksiy" target="_blank">Twitter</a></li>
 						<li><a href="//github.com/ioleksiy/snip2me" target="_blank" title="GitHub"><img src="images/icon-gh-light.png" width="30" height="20" alt="GitHub" /></a></li>
 					</ul>
@@ -401,7 +411,7 @@ end
 		<div class="row">
 			<div class="sixcol">
 				<p>Reply to <a href="//twitter.com/ioleksiy" target="_blank" title="My twitter account">@ioleksiy</a> if you have questions</p>
-				<p style="margin-top: 30px">Copyright &copy; 2012. MIT license is applied</p>
+				<p style="margin-top: 30px">Copyright &copy; <span id="copyrightYearRange">2012</span>. MIT license is applied</p>
 			</div>
 			<div class="threecol">
 				<div class="footerTitle">Developed by</div>
