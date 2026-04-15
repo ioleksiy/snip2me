@@ -1,5 +1,7 @@
 class DelimiterAnalyzer extends Analyzer
-  constructor: (@delimeters = null) ->
+  constructor: (delimeters = null) ->
+    super()
+    @delimeters = delimeters
     if (@delimeters == null)
       @delimeters = ['{', '}', '[', ']', '=',
                      ';', ':', '?', '(', ')',

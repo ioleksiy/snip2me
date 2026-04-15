@@ -2,8 +2,49 @@
 module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-coffeelint');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
+
+  var bundleSources = [
+    'lib/_Utils.coffee',
+
+    'lib/SyntaxToken.coffee',
+    'lib/SyntaxTokens.coffee',
+    'lib/SyntaxTokens.CSharp.coffee',
+
+    'lib/Description.coffee',
+    'lib/Factory.coffee',
+    'lib/CodeReader.coffee',
+
+    'lib/Analyzer.coffee',
+    'lib/Analyzer.NewLine.coffee',
+    'lib/Analyzer.Space.coffee',
+    'lib/Analyzer.Padding.coffee',
+    'lib/Analyzer.String.coffee',
+    'lib/Analyzer.Delimiter.coffee',
+    'lib/Analyzer.CppComments.coffee',
+    'lib/Analyzer.UnixComments.coffee',
+
+    'lib/SyntaxParser.coffee',
+    'lib/ParserFactory.coffee',
+    'lib/SyntaxParsers.CSharp.coffee',
+    'lib/SyntaxParsers.CoffeeScript.coffee',
+    'lib/SyntaxParsers.Java.coffee',
+    'lib/SyntaxParsers.Ruby.coffee',
+
+    'lib/Scheme.coffee',
+    'lib/SchemeFactory.coffee',
+    'lib/Schemes.VS2010.coffee',
+    'lib/Schemes.Aptana.coffee',
+
+    'lib/Painter.coffee',
+    'lib/Painters.Base.coffee',
+    'lib/PainterFactory.coffee',
+    'lib/Painters.Bases.Border.coffee',
+    'lib/Painters.Code.coffee',
+
+    'lib/xWrapper.coffee'
+  ];
+
   grunt.initConfig({
     meta: {
       version: '0.1.0',
@@ -13,13 +54,20 @@ module.exports = function(grunt) {
         '* Copyright (c) 2011-<%= grunt.template.today("yyyy") %> ' +
         'Oleksii Glib; Licensed MIT */'
     },
-    files: ['grunt.js', 'lib/*coffee'],
+    files: ['grunt.js'].concat(bundleSources),
+    bundleSources: bundleSources,
     shell: {
         coffee: {
-            command: 'coffee -c -j s2m.js -o dist/ lib/'
+        command: function() {
+         return 'for f in ' + grunt.config.get('bundleSources').join(' ') +
+           '; do cat "$f"; echo; done | coffee --compile --stdio > dist/s2m.js';
+        }
+        },
+        minify: {
+          command: './node_modules/.bin/terser dist/s2m.js -o dist/s2m.min.js --compress --mangle'
         },
         rmf: {
-	        command: 'rm -rf ./dist'
+	        command: 'rm -rf ./dist && mkdir -p ./dist'
         }
     },
     coffeelintOptions: {
@@ -29,16 +77,6 @@ module.exports = function(grunt) {
     },
     coffeelint: {
       app: ['lib/*.coffee']
-    },
-    uglify: {
-      options: {
-        banner: '<%= meta.banner %>\n'
-      },
-      dist: {
-        files: {
-          'dist/s2m.min.js': ['dist/s2m.js']
-        }
-      }
     },
     watch: {
       files: '<%= files %>',
@@ -61,5 +99,5 @@ module.exports = function(grunt) {
     },
   });
 
-  grunt.registerTask('default', ['coffeelint', 'shell:rmf', 'shell:coffee', 'uglify']);
+  grunt.registerTask('default', ['coffeelint', 'shell:rmf', 'shell:coffee', 'shell:minify']);
 };

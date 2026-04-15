@@ -1,6 +1,7 @@
 class CodePainter extends Painter
-  constructor: (canvas, @tokens, scheme, conf) ->
+  constructor: (canvas, tokens, scheme, conf) ->
     super(canvas, conf, scheme)
+    @tokens = tokens
     #@settings
     [@w, @h] = @calculate()
     

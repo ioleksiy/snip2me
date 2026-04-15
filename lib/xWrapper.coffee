@@ -163,17 +163,31 @@ class SnipController
     if (@runChecked)
       return @canRun
     @runChecked = true
-    N = navigator.appName
-    ua = navigator.userAgent
+    N = if (navigator? && navigator.appName?)
+      navigator.appName
+    else
+      'unknown'
+    ua = if (navigator? && navigator.userAgent?)
+      navigator.userAgent
+    else
+      ''
     tem = null
     M= ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i)
     if (M && (tem= ua.match(/version\/([\.\d]+)/i))!= null)
       M[2]= tem[1]
-    if (M?)
+    if (M? && M[1]? && M[2]?)
       M = [M[1], M[2]]
     else
-      M = [N, navigator.appVersion, '-?']
-    @canRun = @checkVersions(M[0].toLowerCase(), parseFloat(M[1]))
+      appVersion = if (navigator? && navigator.appVersion?)
+        navigator.appVersion
+      else
+        '0'
+      M = [N, appVersion, '-?']
+    browser = if (M[0]?) then M[0].toLowerCase() else 'unknown'
+    version = parseFloat(M[1])
+    if (isNaN(version))
+      version = 0
+    @canRun = @checkVersions(browser, version)
     if (!@canRun)
       console.log("snip2me is not compatible with current browser")
     return @canRun

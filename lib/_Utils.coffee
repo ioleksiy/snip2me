@@ -1,10 +1,12 @@
 Array.prototype.some ?= (f) ->
-  (return true if f x) for x in @
-  return false
+  for x in @
+    return true if f x
+  false
 
 Array.prototype.every ?= (f) ->
-  (return false if not f x) for x in @
-  return true
+  for x in @
+    return false if not f x
+  true
 
 String.prototype.toImg ?= () ->
   img = document.createElement("img")

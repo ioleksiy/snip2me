@@ -6,16 +6,17 @@
 	"main": "dist/s2m.js",
 	"scripts": {
 		"build": "grunt",
-		"watch": "grunt watch"
+		"watch": "grunt watch",
+		"smoke": "node test/smoke.js"
 	},
 	"devDependencies": {
 		"coffeescript": "^2.7.0",
 		"grunt": "^1.6.1",
 		"grunt-cli": "^1.5.0",
 		"grunt-coffeelint": "^0.0.16",
-		"grunt-contrib-uglify": "^5.2.2",
 		"grunt-contrib-watch": "^1.1.0",
-		"grunt-shell": "^4.0.0"
+		"grunt-shell": "^4.0.0",
+		"terser": "^5.31.6"
 	},
 	"engines": {
 		"node": ">=22",

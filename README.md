@@ -157,6 +157,8 @@ Public methods on global `snip2`:
 
 This project keeps its legacy CoffeeScript + Grunt architecture, with a compatibility refresh so it runs on modern Node/Grunt.
 
+Note: build uses the modern `coffeescript` compiler package while preserving legacy runtime behavior through deterministic source ordering and smoke-test validation.
+
 ### Prerequisites
 
 - Node.js >= 22
@@ -174,14 +176,30 @@ Default build runs:
 
 1. CoffeeLint on `lib/*.coffee`
 2. Remove `dist`
-3. Compile CoffeeScript bundle to `dist/s2m.js`
-4. Minify to `dist/s2m.min.js`
+3. Compile CoffeeScript bundle to `dist/s2m.js` using an explicit dependency-safe source order
+4. Minify to `dist/s2m.min.js` with `terser`
+
+The bundle compile step concatenates ordered sources with explicit newline separators, then runs `coffee --compile --stdio` (replacement for deprecated `coffee --join`).
 
 Run:
 
 ```bash
 npm run build
 ```
+
+### Smoke test
+
+A runtime smoke test validates that the generated bundle initializes correctly and exposes the expected API:
+
+```bash
+npm run smoke
+```
+
+The smoke test checks:
+
+- `snip2` global exists after bundle load.
+- `snip2.parsers()` and `snip2.schemes()` return populated arrays.
+- `snip2.compile(...)` returns a data URI.
 
 You can also run Grunt directly (`npx grunt`). A `Gruntfile.js` alias is included for modern Grunt discovery.
 
@@ -192,11 +210,13 @@ This repository includes two workflows:
 - `.github/workflows/build.yml`
    - Runs on push/PR/manual trigger.
    - Builds `dist/s2m.js` and `dist/s2m.min.js`.
+   - Runs `npm run smoke` to verify bundle initialization/API.
    - Uploads build outputs as artifact `snip2me-dist`.
 
 - `.github/workflows/release.yml`
    - Runs on tags matching `v*` (for example `v0.2.0`) and manual trigger.
    - Builds the bundle.
+   - Runs `npm run smoke` before publishing artifacts.
    - Creates/updates a GitHub Release and uploads `s2m.js` and `s2m.min.js` as release assets.
 
 ### Creating a release build
@@ -220,10 +240,12 @@ After the workflow completes, third-party sites can use:
 
 ## Compatibility Fixes Applied
 
-- Build config updated from deprecated Grunt `min` usage to `uglify` plugin configuration.
+- Build config updated from deprecated Grunt `min` usage to a deterministic shell-based `terser` minification step.
 - Added modern Grunt entrypoint (`Gruntfile.js`) while keeping existing `grunt.js` logic.
 - Updated package metadata and dev dependencies for current Node tooling.
 - Fixed runtime `compile(...)` context handling so programmatic usage without explicit context no longer fails due to scheme creation using a null context.
+- Fixed a release-blocking bundling-order bug by replacing implicit directory concatenation with an explicit dependency-safe source order (prevents subclasses from being emitted before base classes).
+- Added a runtime smoke test (`test/smoke.js`) and enforced it in CI/release workflows.
 
 ## License
 

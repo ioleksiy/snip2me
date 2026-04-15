@@ -1,6 +1,7 @@
 class PaintersBase extends Painter
-  constructor: (canvas, @params, settings, scheme) ->
+  constructor: (canvas, params, settings, scheme) ->
     super(canvas, settings, scheme)
+    @params = params
     @initialize()
 
   get: (key, defo = null) ->
