@@ -123,6 +123,7 @@ On page load, snip2me automatically transforms matching `<pre>` blocks into rend
 - `data-snip-scheme`: visual scheme code.
 - `data-snip-painter-N`: painter chain items, sorted by N.
 - `data-snip-conf-*`: per-element settings (example: `data-snip-conf-min-width`).
+- `data-snip-conf-pixel-ratio`: render scale multiplier (for example `2` for higher-resolution output).
 
 ### Global defaults
 
@@ -131,12 +132,15 @@ You can set a global config object before the script loads:
 ```html
 <script>
   var snip = {
-      minWidth: 400
+         minWidth: 400,
+         pixelRatio: 2
   };
 </script>
 ```
 
 `minwidth` (lowercase `w`) is still accepted for backward compatibility with older embeds, but `minWidth` is the preferred key.
+
+For higher-quality rendering on modern HiDPI displays, set `pixelRatio` (for example `2`).
 
 ## Programmatic API
 
@@ -187,19 +191,32 @@ Run:
 npm run build
 ```
 
-### Smoke test
+### Headless self-test
 
-A runtime smoke test validates that the generated bundle initializes correctly and exposes the expected API:
+A runtime self-test validates that the generated bundle initializes correctly in a headless Node environment and can generate temporary output files on disk:
+
+```bash
+npm run selftest
+```
+
+Backward-compatible alias:
 
 ```bash
 npm run smoke
 ```
 
-The smoke test checks:
+The self-test checks:
 
 - `snip2` global exists after bundle load.
 - `snip2.parsers()` and `snip2.schemes()` return populated arrays.
-- `snip2.compile(...)` returns a data URI.
+- `snip2.compile(...)` returns PNG data URIs for multiple language/scheme combinations.
+- Decoded PNG payloads are written as temporary files on disk and validated.
+- Element-based `compile(element)` replaces a `<pre>` node with an `<img>` node.
+- PNG dimensions are validated to ensure higher-resolution output.
+
+The self-test uses a headless canvas backend (`@napi-rs/canvas`) so the generated PNG files are real rendered snippet images.
+
+Self-test artifacts are generated under `tmp/selftest-*` inside the project directory. The `tmp/` folder is created automatically by the self-test and is git-ignored. By default, the generated run folder is removed automatically after success/failure. Set `SNIP2ME_KEEP_SELFTEST_TMP=1` to keep generated files for inspection.
 
 You can also run Grunt directly (`npx grunt`). A `Gruntfile.js` alias is included for modern Grunt discovery.
 
@@ -210,13 +227,13 @@ This repository includes two workflows:
 - `.github/workflows/build.yml`
    - Runs on push/PR/manual trigger.
    - Builds `dist/s2m.js` and `dist/s2m.min.js`.
-   - Runs `npm run smoke` to verify bundle initialization/API.
+   - Runs `npm run selftest` to verify headless initialization and output generation.
    - Uploads build outputs as artifact `snip2me-dist`.
 
 - `.github/workflows/release.yml`
    - Runs on tags matching `v*` (for example `v0.2.0`) and manual trigger.
    - Builds the bundle.
-   - Runs `npm run smoke` before publishing artifacts.
+   - Runs `npm run selftest` before publishing artifacts.
    - Creates/updates a GitHub Release and uploads `s2m.js` and `s2m.min.js` as release assets.
 
 ### Creating a release build
@@ -245,7 +262,8 @@ After the workflow completes, third-party sites can use:
 - Updated package metadata and dev dependencies for current Node tooling.
 - Fixed runtime `compile(...)` context handling so programmatic usage without explicit context no longer fails due to scheme creation using a null context.
 - Fixed a release-blocking bundling-order bug by replacing implicit directory concatenation with an explicit dependency-safe source order (prevents subclasses from being emitted before base classes).
-- Added a runtime smoke test (`test/smoke.js`) and enforced it in CI/release workflows.
+- Added a runtime headless self-test (`test/selftest.js`, with `test/smoke.js` alias) and enforced it in CI/release workflows.
+- Added optional high-DPI rendering via `pixelRatio` setting to improve output quality on modern displays.
 
 ## License
 

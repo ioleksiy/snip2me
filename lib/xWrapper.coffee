@@ -24,8 +24,14 @@ class SnipController
         tp.withChild(p)
         p = tp
       [w,h] = p.measure()
-      c.width = w
-      c.height = h
+      ratio = if (cont.pixelRatio? && cont.pixelRatio > 0)
+        cont.pixelRatio
+      else
+        1
+      c.width = w * ratio
+      c.height = h * ratio
+      if (ratio != 1)
+        c.getContext('2d').scale(ratio, ratio)
       p.paint()
       return c.toDataURL()
 
@@ -78,7 +84,8 @@ class SnipController
     @defaults = {
       minWidth: 0,
       font: 'Courier New',
-      size: 12
+      size: 12,
+      pixelRatio: 1
     }
     
     @readConfFromElement = (el) ->

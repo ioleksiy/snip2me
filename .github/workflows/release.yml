@@ -31,8 +31,8 @@ jobs:
       - name: Build bundle
         run: npm run build
 
-      - name: Run smoke test
-        run: npm run smoke
+      - name: Run headless self-test
+        run: npm run selftest
 
       - name: Create GitHub release and upload assets
         env:

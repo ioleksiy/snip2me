@@ -7,9 +7,11 @@
 	"scripts": {
 		"build": "grunt",
 		"watch": "grunt watch",
-		"smoke": "node test/smoke.js"
+		"smoke": "node test/smoke.js",
+		"selftest": "node test/selftest.js"
 	},
 	"devDependencies": {
+		"@napi-rs/canvas": "^0.1.68",
 		"coffeescript": "^2.7.0",
 		"grunt": "^1.6.1",
 		"grunt-cli": "^1.5.0",
