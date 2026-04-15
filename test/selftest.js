@@ -155,6 +155,30 @@ function run() {
         ext: 'json',
         scheme: 'monokai',
         text: '{\n  "name": "snip2me",\n  "ok": true\n}\n'
+      },
+      {
+        name: 'cpp-solarized-dark',
+        ext: 'cpp',
+        scheme: 'solarized-dark',
+        text: '#include <iostream>\nint main() { std::cout << "hi"; }\n'
+      },
+      {
+        name: 'bash-solarized-light',
+        ext: 'bash',
+        scheme: 'solarized-light',
+        text: '#!/usr/bin/env bash\nfor f in a b; do echo "$f"; done\n'
+      },
+      {
+        name: 'rust-dracula',
+        ext: 'rs',
+        scheme: 'dracula',
+        text: 'fn main() {\n  println!("hi");\n}\n'
+      },
+      {
+        name: 'sql-dracula',
+        ext: 'sql',
+        scheme: 'dracula',
+        text: 'SELECT id, name\nFROM users\nWHERE active = true\nORDER BY id;\n'
       }
     ];
 
