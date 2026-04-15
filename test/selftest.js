@@ -179,6 +179,42 @@ function run() {
         ext: 'sql',
         scheme: 'dracula',
         text: 'SELECT id, name\nFROM users\nWHERE active = true\nORDER BY id;\n'
+      },
+      {
+        name: 'kotlin-nord',
+        ext: 'kotlin',
+        scheme: 'nord',
+        text: 'fun sum(a: Int, b: Int): Int {\n  return a + b\n}\n'
+      },
+      {
+        name: 'swift-xcode-light',
+        ext: 'swift',
+        scheme: 'xcode-light',
+        text: 'func greet(name: String) {\n  print("Hello, \\(name)")\n}\n'
+      },
+      {
+        name: 'php-intellij-light',
+        ext: 'php',
+        scheme: 'intellij-light',
+        text: '<?php\nfunction add($a, $b) {\n  return $a + $b;\n}\n'
+      },
+      {
+        name: 'html-nord',
+        ext: 'html',
+        scheme: 'nord',
+        text: '<html>\n  <body>\n    <h1>Hello</h1>\n  </body>\n</html>\n'
+      },
+      {
+        name: 'css-xcode-light',
+        ext: 'css',
+        scheme: 'xcode-light',
+        text: '.card {\n  color: #222;\n  padding: 8px;\n}\n'
+      },
+      {
+        name: 'xml-intellij-light',
+        ext: 'xml',
+        scheme: 'intellij-light',
+        text: '<?xml version="1.0"?>\n<root>\n  <item id="1"/>\n</root>\n'
       }
     ];
 

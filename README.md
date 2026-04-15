@@ -11,8 +11,8 @@ snip2me exists to make shareable code snippets that preserve visual styling rega
 ## What This Repository Contains
 
 - A CoffeeScript implementation of a tokenization + painting pipeline.
-- Language parsers for C#, Java, JavaScript, TypeScript, Python, Go, C, C++, Rust, Bash, SQL, JSON, YAML, Ruby, and CoffeeScript.
-- Color schemes (VS 2010, Aptana, GitHub Light, GitHub Dark, Monokai, One Dark, Solarized Light, Solarized Dark, and Dracula).
+- Language parsers for C#, Java, JavaScript, TypeScript, Python, Go, C, C++, Rust, Bash, SQL, Kotlin, Swift, PHP, HTML, CSS, XML, JSON, YAML, Ruby, and CoffeeScript.
+- Color schemes (VS 2010, Aptana, GitHub Light, GitHub Dark, Monokai, One Dark, Solarized Light, Solarized Dark, Dracula, IntelliJ Light, Nord, and Xcode Light).
 - Painter decorators (currently a border painter) that can wrap the code painter.
 - A demo page in `test/index.html` that shows attribute-based usage.
 - A legacy Grunt build that compiles `lib/*.coffee` into `dist/s2m.js` and minifies to `dist/s2m.min.js`.
@@ -49,6 +49,12 @@ Registered parser codes:
 - Rust: `rs`, `rust`
 - Bash: `sh`, `bash`, `zsh`
 - SQL: `sql`
+- Kotlin: `kt`, `kts`, `kotlin`
+- Swift: `swift`
+- PHP: `php`, `phtml`
+- HTML: `html`, `htm`, `xhtml`
+- CSS: `css`, `scss`, `less`
+- XML: `xml`, `xsd`, `svg`
 - JSON: `json`
 - YAML: `yaml`, `yml`
 - Ruby: `rb`, `ruby`
@@ -69,6 +75,9 @@ Registered scheme codes:
 - `solarized-light`
 - `solarized-dark`
 - `dracula`
+- `intellij-light`
+- `nord`
+- `xcode-light`
 
 You can inspect runtime availability using `snip2.schemes()`.
 
@@ -80,13 +89,12 @@ Include the built script and annotate a `<pre>` element:
 <script src="dist/s2m.js"></script>
 
 <pre
-   data-snip-lang="rs"
-   data-snip-scheme="dracula"
+   data-snip-lang="swift"
+   data-snip-scheme="xcode-light"
   data-snip-painter-1="border => radius:5,width:1"
   data-snip-conf-min-width="800">
-fn main() {
-   let sum = 2 + 3;
-   println!("{}", sum);
+func greet(name: String) {
+    print("Hello, \(name)")
 }
 </pre>
 ```
@@ -127,11 +135,10 @@ You can consume snip2me without cloning this repository.
    <script src="https://github.com/ioleksiy/snip2me/releases/latest/download/s2m.min.js"></script>
 </head>
 <body>
-   <pre data-snip-lang="sql" data-snip-scheme="solarized-light" data-snip-painter-1="border => radius:5,width:1">
-SELECT id, name
-FROM users
-WHERE active = true
-ORDER BY name;
+   <pre data-snip-lang="kotlin" data-snip-scheme="nord" data-snip-painter-1="border => radius:5,width:1">
+fun sum(a: Int, b: Int): Int {
+   return a + b
+}
    </pre>
 </body>
 </html>
